@@ -56,19 +56,9 @@ public class ContentDisposition {
         String extendedFilename = null;
         Matcher m = CD_HEADER_PARAMS_PATTERN.matcher(tempValue);
         while (m.find()) {
-            String paramName = null;
-            String paramValue = "";
-            
-            String groupValue = m.group().trim();
-            int eqIndex = groupValue.indexOf('=');
-            if (eqIndex > 0) {
-                paramName = groupValue.substring(0, eqIndex).trim();
-                if (eqIndex + 1 != groupValue.length()) {
-                    paramValue = groupValue.substring(eqIndex + 1).trim().replace("\"", "");
-                }
-            } else {
-                paramName = groupValue;
-            }
+            String[] pair = m.group().trim().split("=");
+            String paramName = pair[0].trim();
+            String paramValue = pair.length == 2 ? pair[1].trim().replace("\"", "") : "";
             // filename* looks like the only CD param that is human readable
             // and worthy of the extended encoding support. Other parameters
             // can be supported if needed, see the complete list below

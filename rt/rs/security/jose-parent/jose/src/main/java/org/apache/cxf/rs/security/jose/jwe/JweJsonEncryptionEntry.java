@@ -22,10 +22,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.cxf.jaxrs.json.basic.JsonMapObjectReaderWriter;
-import org.apache.cxf.jaxrs.json.basic.JsonObject;
 import org.apache.cxf.rs.security.jose.common.JoseUtils;
 
-public class JweJsonEncryptionEntry implements JsonObject {
+public class JweJsonEncryptionEntry {
     private JweHeaders unprotectedHeader;
     private String encodedEncryptedKey;
     public JweJsonEncryptionEntry(String encodedEncryptedKey) {

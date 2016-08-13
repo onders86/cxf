@@ -1456,8 +1456,7 @@ public abstract class AbstractSTSClient implements Configurable, InterceptorProv
         Element rstDec = rst;
         String id = findID(rar, rur, rstDec);
         if (StringUtils.isEmpty(id)) {
-            LOG.fine("No ID extracted from token, so just making one up");
-            id = WSSConfig.getNewInstance().getIdAllocator().createSecureId("_", null);
+            throw new TrustException("NO_ID", LOG);
         }
         SecurityToken token = new SecurityToken(id, rstDec, lte);
         token.setAttachedReference(rar);
