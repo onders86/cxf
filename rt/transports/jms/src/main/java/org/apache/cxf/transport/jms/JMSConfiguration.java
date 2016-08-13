@@ -77,7 +77,6 @@ public class JMSConfiguration {
      * Destination name to send out as replyTo address in the message 
      */
     private String replyToDestination;
-    private volatile Destination replyToDestinationDest;
     private String messageType = JMSConstants.TEXT_MESSAGE_TYPE;
     private boolean pubSubDomain;
     private boolean replyPubSubDomain;
@@ -442,27 +441,14 @@ public class JMSConfiguration {
         }
         return resolver.resolveDestinationName(session, replyToDestinationName, pubSubDomain);
     }
-
+    
     public Destination getReplyToDestination(Session session, String userDestination) throws JMSException {
-        if (userDestination != null) {
-            return destinationResolver.resolveDestinationName(session, userDestination, replyPubSubDomain);
-        }
-        if (replyToDestination == null) {
+        if (userDestination == null) {
             return getReplyDestination(session);
         }
-        Destination result = replyToDestinationDest;
-        if (result == null) {
-            synchronized (this) {
-                result = replyToDestinationDest;
-                if (result == null) {
-                    result = destinationResolver.resolveDestinationName(session, replyToDestination, replyPubSubDomain);
-                    replyToDestinationDest = result;
-                }
-            }
-        }
-        return result;
+        return destinationResolver.resolveDestinationName(session, userDestination, replyPubSubDomain);
     }
-
+    
     public Destination getReplyDestination(Session session) throws JMSException {
         Destination result = replyDestinationDest;
         if (result == null) {

@@ -211,7 +211,7 @@ public class JMSConduit extends AbstractConduit implements JMSExchangeSender, Me
             String jmsMessageID = sendMessage(request, outMessage, replyToDestination, correlationId, closer,
                                               session);
             boolean useSyncReceive = ((correlationId == null || userCID != null) && !jmsConfig.isPubSubDomain())
-                || (!replyToDestination.equals(staticReplyDestination) && headers.getJMSReplyTo() != null);
+                || !replyToDestination.equals(staticReplyDestination);
             if (correlationId == null) {
                 correlationId = jmsMessageID;
                 correlationMap.put(correlationId, exchange);

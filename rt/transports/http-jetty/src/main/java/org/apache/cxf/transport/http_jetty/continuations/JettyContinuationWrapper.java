@@ -80,10 +80,6 @@ public class JettyContinuationWrapper implements Continuation, ContinuationListe
         return isResumed;
     }
 
-    public boolean isExpired() {
-        return continuation.isExpired();
-    }
-    
     public void reset() {
         try {
             continuation.complete();
